@@ -12,10 +12,14 @@ let yellowSound = new Audio("sounds/yellow.mp3");
 let wrongSound = new Audio("sounds/wrong.mp3");
 
 // Add event listeners to the buttons
-$(".btn").on("click", (clickEvent) => {buttonHandler(clickEvent)});
+// $(".btn").on("click", (clickEvent) => {buttonHandler(clickEvent)});
+
+// $(".reset-btn").on("click", startOver);
+
+$(".start-btn").on("click", startGame);
 
 // Add event listener to the entire document to detect the first key press(only once).
-$(document).one("keypress", nextSequence);
+// $(document).one("keypress", nextSequence);
 
 /**
  * Play sound when new sequence is generated or a button is pressed.
@@ -113,14 +117,14 @@ function checkAnswer(index) {
             $("body").removeClass("game-over");
         }, 200);
 
+        // Game started set to false.
+        isGameStarted = false;
+
         // Game over message.
-        $("#level-title").text("Game Over, Press Any Key to Restart");
+        $("#level-title").text("Game Over!");
 
         // Remove event listeners from the buttons.
         $(".btn").off("click");
-
-        // Game started set to false.
-        isGameStarted = false;
 
         // Restart the game.
         startOver();
@@ -137,12 +141,12 @@ function buttonHandler(event) {
     if (isGameStarted) {
         // Store the id of the button clicked.
         userChosenColor = event.target.id;
-        console.log(userChosenColor);
+        // console.log(userChosenColor);
         // console.log(event);
 
         // Add the last button clicked by the user to the sequence clicked by user.
         userClickedPattern.push(userChosenColor);
-        console.log(userClickedPattern);
+        // console.log(userClickedPattern);
 
         // Reproduce sound and animates the button clicked.
         playSound(userChosenColor);
@@ -158,10 +162,10 @@ function buttonHandler(event) {
  */
 function startOver() {
     // Add event listener to the entire document to detect the first key press(only once).
-    $(document).one("keypress", nextSequence);
+    // $(document).one("keypress", nextSequence);
 
-    // Add event listeners to the buttons
-    $(".btn").on("click", (clickEvent) => {buttonHandler(clickEvent)});
+    // Reset variables.
+    isGameStarted = false;
 
     // Reset level.
     level = 0;
@@ -171,4 +175,25 @@ function startOver() {
 
     // Reset user pattern.
     userClickedPattern = [];
+
+    // Init message.
+    // $("#level-title").text("Simon Game. Enjoy!!");
+
+    // Event listener to start button.
+    $(".start-btn").on("click", startGame);
+
+    // Add event listeners to the buttons
+    // $(".btn").on("click", (clickEvent) => {buttonHandler(clickEvent)});
+
+}
+
+function startGame() {
+    // Add event listeners to the buttons
+    $(".btn").on("click", (clickEvent) => {buttonHandler(clickEvent)});
+
+    // Remove event to start button.
+    $(".start-btn").off("click", startGame);
+
+    // Init first sequence of the game.
+    nextSequence();
 }
