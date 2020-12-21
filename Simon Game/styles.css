@@ -54,7 +54,7 @@ body {
 }
 
 .action-btn {
-  padding: 20px 40px;
+  padding: 20px 60px;
   margin: 25px 50px;
   font-family: 'Press Start 2P', cursive;
   font-weight: bold;
@@ -75,12 +75,12 @@ body {
   color: white;
 }
 
-/* @media screen and (max-width: 680px) {
+@media screen and (max-width: 500px) {
   .container {
     width: 70%;
   }
 
-  body {
-    background-color: #4692e4;
+  #level-title {
+    font-size: 2.5rem;
   }
-} */
+}
